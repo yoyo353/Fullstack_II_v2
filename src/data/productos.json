@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "codigo": "GZ-001",
+    "nombre": "Control Pro X",
+    "precio": 49990,
+    "precioOriginal": 69990,
+    "descuento": 29,
+    "stock": 12,
+    "stockCritico": 3,
+    "categoria": "Accesorios",
+    "imagen": "https://picsum.photos/seed/gamepad/400/200"
+  },
+  {
+    "id": 2,
+    "codigo": "GZ-002",
+    "nombre": "Mouse GX Ultralight",
+    "precio": 39990,
+    "precioOriginal": 49990,
+    "descuento": 20,
+    "stock": 6,
+    "stockCritico": 2,
+    "categoria": "PC Gaming",
+    "imagen": "https://picsum.photos/seed/mouse/400/200"
+  },
+  {
+    "id": 3,
+    "codigo": "GZ-003",
+    "nombre": "Teclado Mecánico TKL",
+    "precio": 54990,
+    "precioOriginal": 64990,
+    "descuento": 15,
+    "stock": 9,
+    "stockCritico": 3,
+    "categoria": "PC Gaming",
+    "imagen": "https://picsum.photos/seed/keyboard/400/200"
+  },
+  {
+    "id": 4,
+    "codigo": "GZ-004",
+    "nombre": "Headset 7.1",
+    "precio": 45990,
+    "precioOriginal": 59990,
+    "descuento": 23,
+    "stock": 3,
+    "stockCritico": 1,
+    "categoria": "Audio",
+    "imagen": "https://picsum.photos/seed/headset/400/200"
+  }
+]
