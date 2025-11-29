@@ -1,11 +1,15 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { authService } from './services/auth.service'
+
+// Mock authService
+jasmine.createSpyObj('authService', ['login', 'logout', 'register', 'getCurrentUser'])
 
 // Componente de prueba para usar el contexto
 const TestComponent = () => {
   const { user, login, logout, register } = useAuth()
-  
+
   return (
     <div>
       <div data-testid="user">{user ? user.email : 'No user'}</div>
@@ -17,6 +21,13 @@ const TestComponent = () => {
 }
 
 describe('AuthContext', () => {
+  beforeEach(() => {
+    spyOn(authService, 'getCurrentUser').and.returnValue(null)
+    spyOn(authService, 'login').and.returnValue(Promise.resolve({ user: { email: 'test@test.com' } }))
+    spyOn(authService, 'logout')
+    spyOn(authService, 'register').and.returnValue(Promise.resolve({ user: { email: 'new@test.com' } }))
+  })
+
   const renderWithProvider = (component) => {
     return render(
       <AuthProvider>
@@ -25,22 +36,22 @@ describe('AuthContext', () => {
     )
   }
 
-  it('debe inicializar sin usuario', () => {
+  it('debe inicializar sin usuario', async () => {
     renderWithProvider(<TestComponent />)
-    expect(screen.getByTestId('user')).toHaveTextContent('No user')
+    await waitFor(() => expect(screen.getByTestId('user')).toHaveTextContent('No user'))
   })
 
   it('debe permitir login', async () => {
     renderWithProvider(<TestComponent />)
     fireEvent.click(screen.getByText('Login'))
-    // Nota: En un test real necesitarías mockear localStorage
-    expect(screen.getByTestId('user')).toHaveTextContent('test@test.com')
+    await waitFor(() => expect(screen.getByTestId('user')).toHaveTextContent('test@test.com'))
   })
 
-  it('debe permitir logout', () => {
+  it('debe permitir logout', async () => {
     renderWithProvider(<TestComponent />)
     fireEvent.click(screen.getByText('Login'))
+    await waitFor(() => expect(screen.getByTestId('user')).toHaveTextContent('test@test.com'))
     fireEvent.click(screen.getByText('Logout'))
-    expect(screen.getByTestId('user')).toHaveTextContent('No user')
+    await waitFor(() => expect(screen.getByTestId('user')).toHaveTextContent('No user'))
   })
 })
